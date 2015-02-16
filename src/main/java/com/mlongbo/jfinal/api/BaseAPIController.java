@@ -1,12 +1,12 @@
 package com.mlongbo.jfinal.api;
 
 import com.jfinal.core.Controller;
-import com.mlongbo.jfinal.bean.DataResponse;
+import com.mlongbo.jfinal.common.bean.DataResponse;
 import com.mlongbo.jfinal.common.Require;
 import com.mlongbo.jfinal.common.utils.StringUtils;
 import com.mlongbo.jfinal.model.User;
-import com.mlongbo.jfinal.bean.BaseResponse;
-import com.mlongbo.jfinal.bean.Code;
+import com.mlongbo.jfinal.common.bean.BaseResponse;
+import com.mlongbo.jfinal.common.bean.Code;
 import com.mlongbo.jfinal.common.token.TokenManager;
 
 import java.lang.reflect.Array;

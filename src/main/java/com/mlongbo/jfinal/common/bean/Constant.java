@@ -1,6 +1,6 @@
-package com.mlongbo.jfinal.bean;
+package com.mlongbo.jfinal.common.bean;
 
-import com.mlongbo.jfinal.common.PathConstant;
+import com.mlongbo.jfinal.config.AppProperty;
 
 /**
  * @author malongbo
@@ -21,7 +21,7 @@ public class Constant {
     }
     
     public String getResourceServer() {
-        return PathConstant.serverIp;
+        return AppProperty.me().resourcePrefix();
     }
 
     public void setResourceServer(String resourceServer) {

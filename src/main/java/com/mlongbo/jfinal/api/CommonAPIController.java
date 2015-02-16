@@ -2,9 +2,9 @@ package com.mlongbo.jfinal.api;
 
 import com.jfinal.aop.Before;
 import com.jfinal.core.ActionKey;
-import com.mlongbo.jfinal.bean.BaseResponse;
-import com.mlongbo.jfinal.bean.Code;
-import com.mlongbo.jfinal.bean.DatumResponse;
+import com.mlongbo.jfinal.common.bean.BaseResponse;
+import com.mlongbo.jfinal.common.bean.Code;
+import com.mlongbo.jfinal.common.bean.DatumResponse;
 import com.mlongbo.jfinal.common.Require;
 import com.mlongbo.jfinal.common.utils.DateUtils;
 import com.mlongbo.jfinal.interceptor.TokenInterceptor;

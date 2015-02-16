@@ -1,7 +1,9 @@
 package com.mlongbo.jfinal.common;
 
+import org.dom4j.CDATA;
 import org.dom4j.Document;
 import org.dom4j.Element;
+import org.dom4j.Node;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
@@ -88,6 +90,7 @@ public class XmlProperty {
             SAXReader xmlReader = new SAXReader();
             xmlReader.setEncoding("UTF-8");
             document = xmlReader.read(in);
+            propertyCache.clear();
         }
         catch (Exception e) {
             Log.error("Error reading XML properties", e);
@@ -117,6 +120,198 @@ public class XmlProperty {
             }
         }
     }
+
+    /**
+     * Returns the value of the specified property.
+     *
+     * @param name the name of the property to get.
+     * @return the value of the specified property.
+     */
+    public synchronized String getProperty(String name) {
+        String value = propertyCache.get(name);
+        if (value != null) {
+            return value;
+        }
+
+        String[] propName = parsePropertyName(name);
+        // Search for this property by traversing down the XML heirarchy.
+        Element element = document.getRootElement();
+        for (String aPropName : propName) {
+            element = element.element(aPropName);
+            if (element == null) {
+                // This node doesn't match this part of the property name which
+                // indicates this property doesn't exist so return null.
+                return null;
+            }
+        }
+        // At this point, we found a matching property, so return its value.
+        // Empty strings are returned as null.
+        value = element.getTextTrim();
+        if ("".equals(value)) {
+            return null;
+        }
+        else {
+            // Add to cache so that getting property next time is fast.
+            propertyCache.put(name, value);
+            return value;
+        }
+    }
+    /**
+     * Return all values who's path matches the given property
+     * name as a String array, or an empty array if the if there
+     * are no children. This allows you to retrieve several values
+     * with the same property name. For example, consider the
+     * XML file entry:
+     * <pre>
+     * &lt;foo&gt;
+     *     &lt;bar&gt;
+     *         &lt;prop&gt;some value&lt;/prop&gt;
+     *         &lt;prop&gt;other value&lt;/prop&gt;
+     *         &lt;prop&gt;last value&lt;/prop&gt;
+     *     &lt;/bar&gt;
+     * &lt;/foo&gt;
+     * </pre>
+     * If you call getProperties("foo.bar.prop") will return a string array containing
+     * {"some value", "other value", "last value"}.
+     *
+     * @param name the name of the property to retrieve
+     * @return all child property values for the given node name.
+     */
+    public String[] getProperties(String name) {
+        String[] propName = parsePropertyName(name);
+        // Search for this property by traversing down the XML heirarchy,
+        // stopping one short.
+        Element element = document.getRootElement();
+        for (int i = 0; i < propName.length - 1; i++) {
+            element = element.element(propName[i]);
+            if (element == null) {
+                // This node doesn't match this part of the property name which
+                // indicates this property doesn't exist so return empty array.
+                return new String[]{};
+            }
+        }
+        // We found matching property, return names of children.
+        Iterator iter = element.elementIterator(propName[propName.length - 1]);
+        List<String> props = new ArrayList<String>();
+        String value;
+        while (iter.hasNext()) {
+            // Empty strings are skipped.
+            value = ((Element)iter.next()).getTextTrim();
+            if (!"".equals(value)) {
+                props.add(value);
+            }
+        }
+        String[] childrenNames = new String[props.size()];
+        return props.toArray(childrenNames);
+    }
+
+    /**
+     * Return all values who's path matches the given property
+     * name as a String array, or an empty array if the if there
+     * are no children. This allows you to retrieve several values
+     * with the same property name. For example, consider the
+     * XML file entry:
+     * <pre>
+     * &lt;foo&gt;
+     *     &lt;bar&gt;
+     *         &lt;prop&gt;some value&lt;/prop&gt;
+     *         &lt;prop&gt;other value&lt;/prop&gt;
+     *         &lt;prop&gt;last value&lt;/prop&gt;
+     *     &lt;/bar&gt;
+     * &lt;/foo&gt;
+     * </pre>
+     * If you call getProperties("foo.bar.prop") will return a string array containing
+     * {"some value", "other value", "last value"}.
+     *
+     * @param name the name of the property to retrieve
+     * @return all child property values for the given node name.
+     */
+    public Iterator getChildProperties(String name) {
+        String[] propName = parsePropertyName(name);
+        // Search for this property by traversing down the XML heirarchy,
+        // stopping one short.
+        Element element = document.getRootElement();
+        for (int i = 0; i < propName.length - 1; i++) {
+            element = element.element(propName[i]);
+            if (element == null) {
+                // This node doesn't match this part of the property name which
+                // indicates this property doesn't exist so return empty array.
+                return Collections.EMPTY_LIST.iterator();
+            }
+        }
+        // We found matching property, return values of the children.
+        Iterator iter = element.elementIterator(propName[propName.length - 1]);
+        ArrayList<String> props = new ArrayList<String>();
+        while (iter.hasNext()) {
+            props.add(((Element)iter.next()).getText());
+        }
+        return props.iterator();
+    }
+
+    /**
+     * Returns the value of the attribute of the given property name or <tt>null</tt>
+     * if it doesn't exist. Note, this
+     *
+     * @param name the property name to lookup - ie, "foo.bar"
+     * @param attribute the name of the attribute, ie "id"
+     * @return the value of the attribute of the given property or <tt>null</tt> if
+     *      it doesn't exist.
+     */
+    public String getAttribute(String name, String attribute) {
+        if (name == null || attribute == null) {
+            return null;
+        }
+        String[] propName = parsePropertyName(name);
+        // Search for this property by traversing down the XML heirarchy.
+        Element element = document.getRootElement();
+        for (String child : propName) {
+            element = element.element(child);
+            if (element == null) {
+                // This node doesn't match this part of the property name which
+                // indicates this property doesn't exist so return empty array.
+                break;
+            }
+        }
+        if (element != null) {
+            // Get its attribute values
+            return element.attributeValue(attribute);
+        }
+        return null;
+    }
+
+
+    /**
+     * Return all children property names of a parent property as a String array,
+     * or an empty array if the if there are no children. For example, given
+     * the properties <tt>X.Y.A</tt>, <tt>X.Y.B</tt>, and <tt>X.Y.C</tt>, then
+     * the child properties of <tt>X.Y</tt> are <tt>A</tt>, <tt>B</tt>, and
+     * <tt>C</tt>.
+     *
+     * @param parent the name of the parent property.
+     * @return all child property values for the given parent.
+     */
+    public String[] getChildrenProperties(String parent) {
+        String[] propName = parsePropertyName(parent);
+        // Search for this property by traversing down the XML heirarchy.
+        Element element = document.getRootElement();
+        for (String aPropName : propName) {
+            element = element.element(aPropName);
+            if (element == null) {
+                // This node doesn't match this part of the property name which
+                // indicates this property doesn't exist so return empty array.
+                return new String[]{};
+            }
+        }
+        // We found matching property, return names of children.
+        List children = element.elements();
+        int childCount = children.size();
+        String[] childrenNames = new String[childCount];
+        for (int i = 0; i < childCount; i++) {
+            childrenNames[i] = ((Element)children.get(i)).getName();
+        }
+        return childrenNames;
+    }
+
 
     /**
      * Returns an array representation of the given Jive property. Jive
@@ -256,5 +451,13 @@ public class XmlProperty {
                 }
             }
         }
+    }
+    
+    public void destroy() {
+        document = null;
+        file = null;
+        propertyCache.clear();
+        propertyCache = null;
+        
     }
 }

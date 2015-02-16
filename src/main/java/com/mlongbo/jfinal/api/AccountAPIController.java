@@ -4,14 +4,14 @@ import com.jfinal.aop.Before;
 import com.jfinal.aop.ClearInterceptor;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.activerecord.Db;
-import com.mlongbo.jfinal.bean.*;
+import com.mlongbo.jfinal.common.bean.*;
 import com.mlongbo.jfinal.common.utils.SMSUtils;
-import com.mlongbo.jfinal.common.PathConstant;
 import com.mlongbo.jfinal.common.Require;
 import com.mlongbo.jfinal.common.token.TokenManager;
 import com.mlongbo.jfinal.common.utils.DateUtils;
 import com.mlongbo.jfinal.common.utils.RandomUtils;
 import com.mlongbo.jfinal.common.utils.StringUtils;
+import com.mlongbo.jfinal.config.AppProperty;
 import com.mlongbo.jfinal.interceptor.TokenInterceptor;
 import com.mlongbo.jfinal.model.RegisterCode;
 import com.mlongbo.jfinal.model.User;
@@ -113,7 +113,7 @@ public class AccountAPIController extends BaseAPIController {
         String password = getPara("password");//密码
 		String nickName = getPara("nickName");//昵称
     	//头像信息，为空则使用默认头像地址
-    	String avatar = getPara("avatar",PathConstant.DefaultUserAvatar);
+    	String avatar = getPara("avatar", AppProperty.me().defaultUserAvatar());
 
         //校验必填项参数
 		if(!notNull(Require.me()

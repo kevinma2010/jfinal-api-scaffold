@@ -2,15 +2,15 @@ package com.mlongbo.jfinal;
 
 import com.jfinal.config.*;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
-import com.jfinal.plugin.c3p0.C3p0Plugin;
 import com.jfinal.render.ViewType;
+import com.mlongbo.jfinal.config.Context;
+import com.mlongbo.jfinal.handler.ContextHandler;
 import com.mlongbo.jfinal.interceptor.ErrorInterceptor;
 import com.mlongbo.jfinal.model.*;
+import com.mlongbo.jfinal.plugin.HikariCPPlugin;
 import com.mlongbo.jfinal.router.APIRouter;
 import com.mlongbo.jfinal.handler.APINotFoundHandler;
 import com.mlongbo.jfinal.router.ActionRouter;
-
-import java.io.File;
 
 /**
  * JFinal总配置文件，挂接所有接口与插件
@@ -42,10 +42,20 @@ public class AppConfig extends JFinalConfig {
      */
 	@Override
 	public void configPlugin(Plugins me) {
-		C3p0Plugin cp = new C3p0Plugin(new File(AppConfig.class.getClassLoader().getResource("c3p0.properties").getPath()));
-		me.add(cp);
-
-		ActiveRecordPlugin arp = new ActiveRecordPlugin(cp);
+//		C3p0Plugin cp = new C3p0Plugin(loadPropertyFile("jdbc.properties"));
+//		me.add(cp);
+        
+        //初始化连接池插件
+        loadPropertyFile("jdbc.properties");
+        HikariCPPlugin hcp = new HikariCPPlugin(getProperty("jdbcUrl"), 
+                getProperty("user"), 
+                getProperty("password"), 
+                getProperty("driverClass"), 
+                getPropertyToInt("maxPoolSize"));
+        
+        me.add(hcp);
+        
+        ActiveRecordPlugin arp = new ActiveRecordPlugin(hcp);
 		me.add(arp);
 		
 		arp.addMapping("t_user", User.USER_ID, User.class);//用户表
@@ -67,6 +77,17 @@ public class AppConfig extends JFinalConfig {
      */
 	@Override
 	public void configHandler(Handlers me) {
+        me.add(new ContextHandler());
 		me.add(new APINotFoundHandler());
 	}
+
+    @Override
+    public void afterJFinalStart() {
+        Context.me().init();
+    }
+
+    @Override
+    public void beforeJFinalStop() {
+        Context.me().destroy();
+    }
 }

@@ -1,4 +1,4 @@
-package com.mlongbo.jfinal.bean;
+package com.mlongbo.jfinal.common.bean;
 
 import java.util.Map;
 

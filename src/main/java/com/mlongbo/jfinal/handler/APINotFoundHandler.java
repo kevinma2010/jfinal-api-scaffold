@@ -3,8 +3,8 @@ package com.mlongbo.jfinal.handler;
 import com.jfinal.core.JFinal;
 import com.jfinal.handler.Handler;
 import com.jfinal.render.RenderFactory;
-import com.mlongbo.jfinal.bean.Code;
-import com.mlongbo.jfinal.bean.BaseResponse;
+import com.mlongbo.jfinal.common.bean.Code;
+import com.mlongbo.jfinal.common.bean.BaseResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -2,8 +2,8 @@ package com.mlongbo.jfinal.interceptor;
 
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
-import com.mlongbo.jfinal.bean.BaseResponse;
-import com.mlongbo.jfinal.bean.Code;
+import com.mlongbo.jfinal.common.bean.BaseResponse;
+import com.mlongbo.jfinal.common.bean.Code;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

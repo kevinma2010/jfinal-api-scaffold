@@ -1,6 +1,7 @@
 package com.mlongbo.jfinal.common.utils;
 
-import com.mlongbo.jfinal.common.PathConstant;
+import com.mlongbo.jfinal.config.AppProperty;
+import com.mlongbo.jfinal.config.Context;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -171,7 +172,7 @@ public final class FileUtils {
      * @return
      */
     public static String getTimeFilePath(){
-    	return new SimpleDateFormat("yyyy/MM/dd").format(new Date())+"/";
+    	return new SimpleDateFormat("/yyyy/MM/dd").format(new Date())+"/";
     }
 
     /**
@@ -260,21 +261,28 @@ public final class FileUtils {
     /**
      * 保存上传的文件*
      * @param file 文件对象
-     * @param saveFilePath 保存目录
      * @return 文件相对路径, 供请求使用
      */
-    public static final String saveUploadFile(File file, String saveFilePath) {
+    public static final String saveUploadFile(File file) {
+        String saveFilePath = "";
+        //表示存放在tomcat应用目录中
+        if (AppProperty.me().appPath() == 1) {
+            saveFilePath = Context.me().getRequest().getSession().getServletContext().getRealPath("/");
+        }
+        
+        saveFilePath += AppProperty.me().uploadRooPath();
+        
         String timeFilePath = FileUtils.getTimeFilePath();
         String urlPath = "";
         if(FileUtils.isImage(file)){//保存图片
-            saveFilePath += PathConstant.imagesSavedPath + timeFilePath;
-            urlPath = PathConstant.images + timeFilePath;
+            urlPath = AppProperty.me().imagePath() + timeFilePath;
+            saveFilePath += urlPath;
         }else if(FileUtils.isVideo(file)){//保存视频
-            saveFilePath += PathConstant.videosSavedPath + timeFilePath;
-            urlPath = PathConstant.videos + timeFilePath;
+            urlPath = AppProperty.me().videoPath() + timeFilePath;
+            saveFilePath += urlPath;
         }else{//其他文件(如果是)
-            saveFilePath += PathConstant.othersSavedPath + timeFilePath;
-            urlPath = PathConstant.others + timeFilePath;
+            urlPath = AppProperty.me().otherPath() + timeFilePath;
+            saveFilePath += urlPath;
         }
         File saveFileDir = new File(saveFilePath);
         if (!saveFileDir.exists()) {
@@ -282,11 +290,11 @@ public final class FileUtils {
         }
 
 
-        //删掉临时文件
-        file.delete();
         
         //保存 文件
         if (FileUtils.copyFile(file.getAbsolutePath(), saveFilePath + file.getName())) {
+            //删掉临时文件
+            file.delete();
             return urlPath;
         } else {
             return null;
