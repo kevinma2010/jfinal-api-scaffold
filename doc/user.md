@@ -1,5 +1,33 @@
 ## account
 
+### 检查账号是否被注册
+
+#### URL
+	/api/account/checkUser
+
+#### METHOD
+	GET
+
+#### 参数
+* **loginName**:唯一登录名, 即手机号(必填项)
+
+#### 响应
+
+##### 结果说明
+
+code值含义:
+
+* 1表示已被注册
+* 0表示未被注册
+
+##### 简要示例
+
+	{
+		"code":1,
+		"message": "registered"
+	}
+	
+	
 ### 发送手机验证码
 
 #### URL
@@ -43,7 +71,6 @@ code值含义:
 * **code**: 手机验证码(必需项)
 * **nickName**：用户昵称(必填项)
 * **avatar**:用户头像url(选填项)
-* **inviter**: 邀请人账号(选填项)
 
 #### 响应
 	{
@@ -73,17 +100,17 @@ code值含义:
 	{
 		message: "login success",
 		constant: {
-			resourceServer: "http://snailbaba.coding.io"
+			resourceServer: "http://mlongbo.com/upload"
 		},
 		token: "9afe4bda832c4b7aa0d255f6bc86486cJ96XKU",
 		code: 1,
 		info: {
 			sex: 1,
-			state: 1,
+			status: 1,
 			avatar: "/imgs/avatar.jpg",
 			creationDate: 1422782128161,
-			nickName: "说it",
-			email: null,
+			nickName: "Longbo Ma",
+			email: "mlongbo@gmail.com",
 			userId: "f0f504f5710946e5b0a1d6a1acde4210"
 		}
 	}
@@ -102,9 +129,13 @@ code值含义:
 
 **info节点说明**：
 
+* userId：用户ID
 * nickName：昵称
 * email：邮箱
 * avatar: 头像地址
+* sex: 性别, 0表示女, 1表示男
+* status: 账号状态, 1表示启用(正常使用), 0表示禁用
+* creationDate: 注册时间
 
 **constant节点说明**:
 
@@ -136,26 +167,26 @@ code值含义:
 
 **datum节点说明**：
 
+* userId：用户ID
 * nickName：昵称
 * email：邮箱
 * avatar: 头像地址
-* score: 积分
-* grade: 等级
-* invitationNum: 邀请数量
-* downloadNum: 下载数量
+* sex: 性别, 0表示女, 1表示男
+* status: 账号状态, 1表示启用(正常使用), 0表示禁用
+* creationDate: 注册时间
 
 ##### 简要示例
 
 	{
 	  "code": 1,
       "datum": {
-	        "nickName":"jack",
-	        "email":"jack@gmail.com",
-			"avatar": "/jack_avatar.jpg",
-			"score": 20,
-			"grade": 2,
-			"invitationNum": 3,
-			"downloadNum": 10
+			sex: 1,
+			status: 1,
+			avatar: "/imgs/avatar.jpg",
+			creationDate: 1422782128161,
+			nickName: "Longbo Ma",
+			email: "mlongbo@gmail.com",
+			userId: "f0f504f5710946e5b0a1d6a1acde4210"
 	    }
 	}
 
@@ -169,12 +200,14 @@ code值含义:
 	/api/account/profile
 
 #### METHOD
-	PUT(必须是PUT，不能是get和post)
+	PUT
 
 #### 参数
 
 * token：令牌符（必需项）
 * nickName：姓名（可选项）
+* sex：姓名（可选项）
+* avatar：姓名（可选项）
 * email：邮箱（可选项）
 
 
@@ -198,7 +231,7 @@ code值含义:
 	/api/account/password
 
 #### METHOD
-	PUT(必须是PUT，不能是get和post)
+	PUT
 
 #### 参数
 
@@ -232,7 +265,7 @@ code值含义:
 
 * **token**：令牌（必需项）
 * **avatar**：头像文件地址，请先使用文件上传接口获取上传后的访问路径（必需项）
-* 
+
 #### 响应结果说明
 
 * code：表示响应结果状态，1表示成功，0表示失败
