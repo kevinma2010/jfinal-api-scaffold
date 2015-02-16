@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+    <client>
+        <android default="0.1.2">
+            <entry>
+                <version>0.1.2</version>
+                <url>http://snailbaba.mlongbo.com/snailbaba_0_1_1.apk</url>
+                <message>修复bug</message>
+            </entry>
+            <entry>
+                <version>0.1.0</version>
+                <url>http://snailbaba.mlongbo.com/snailbaba_0_1_0.apk</url>
+                <message>第一个版本</message>
+            </entry>
+        </android>
+        <iphone default="0.1.2">
+            <entry>
+                <version>0.1.2</version>
+                <url>http://snailbaba.mlongbo.com/snailbaba_0_1_1.apk</url>
+                <message>修复bug</message>
+            </entry>
+            <entry>
+                <version>0.1.0</version>
+                <url>http://snailbaba.mlongbo.com/upload/snailbaba_0_1_0.apk</url>
+                <message>第一个版本</message>
+            </entry>
+        </iphone>
+    </client>
+</root>

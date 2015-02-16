@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="HelloWorld" default="run" basedir=".">
+    <property name="tomapp" value="/usr/local/tomcat7/webapps/snailbaba"/>
+    <target name="run">
+        <copy todir="${tomapp}">
+            <fileset dir="target/snailbaba"/>
+        </copy>
+    </target>
+</project>

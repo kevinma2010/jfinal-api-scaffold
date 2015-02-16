@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <resource>
+        <!--文件下载的地址前缀-->
+        <prefix>http://mlongbo.com/upload</prefix>
+        <!--标记是否将上传的文件存储在应用目录，如tomcat. 1表示是，0表示否-->
+        <appPath>1</appPath>
+        <!--上传文件存储目录, 如果appPath值为0,需填写目录的绝对路径，否则填写应用目录的相对路径-->
+        <uploadRootPath>upload</uploadRootPath>
+        <!--图片文件存储的相对目录-->
+        <iamgePath>/images</iamgePath>
+        <!--视频文件存储的相对目录-->
+        <videoPath>/videos</videoPath>
+        <!--其它文件存储的相对目录-->
+        <otherPath>/others</otherPath>
+        <!--默认的头像路径, 与prefix值拼接后可访问-->
+        <defaultUserAvatar>/images/defaultUserAvatar.jpg</defaultUserAvatar>
+    </resource>
+</root>
