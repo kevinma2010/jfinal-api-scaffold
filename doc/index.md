@@ -1,18 +1,13 @@
 ## HTTP API文档	总览
 
-### [文件上传](file.html)
+### [文件上传](file.md)
 
-### [用户相关](user.html)
+### [用户相关](user.md)
 
-### [签到相关](signin.html)
-
-### [公告相关](notice.html)
-
-### [通讯录相关](addressbook.html)
 
 ***
 
-## 留言
+## 意见反馈
 
 #### URL
 	/api/feedback
@@ -74,7 +69,7 @@
        "code": 1,
        "datum": {
            "message": "修复bug",
-           "url": "http://snailbaba.mlongbo.com/snailbaba_0_1_1.apk",
+           "url": "http://mlongbo.com/android_0_1_1.apk",
            "version": "0.1.2"
        }
     }
@@ -89,8 +84,8 @@
 
 在登录成功后,登录接口返回的`resourceServer`字段为地址前缀.
 
-如: resourceServer为`http://snailbaba.mlongbo.com`, 用户头像地址为`/img/avatar/rose.jpg`,
-那么完整的地址就是`http://snailbaba.mlongbo.com/img/avatar/rose.jpg`
+如: resourceServer为`http://mlongbo.com`, 用户头像地址为`/img/avatar/rose.jpg`,
+那么完整的地址就是`http://mlongbo.com/img/avatar/rose.jpg`
 
 ### 时间戳说明
 
