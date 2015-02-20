@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * *
+ * 存放校验条件和响应信息
  * @author malongbo
  */
 public class Require {
-    private List<Object> conditions = new ArrayList<Object>();
-    private List<String> messages = new ArrayList<String>();
+    private List<Object> conditions = new ArrayList<Object>(); //不为空的条件集合
+    private List<String> messages = new ArrayList<String>(); //响应信息集合
 
     public Require put(Object param, String message) {
         conditions.add(param);
@@ -19,16 +19,12 @@ public class Require {
         return this;
     }
 
-    public static Require me() {
+    /**
+     * 创建实例*
+     * @return Require对象
+     */
+    public static final Require me() {
         return new Require();
-    }
-
-    public List<Object> getConditions() {
-        return conditions;
-    }
-
-    public List<String> getMessages() {
-        return messages;
     }
 
     public Object get(int index) {
@@ -42,18 +38,4 @@ public class Require {
         return conditions.size();
     }
 
-    public boolean validate() {
-
-        for (Object obj : conditions) {
-            if (obj == null) {
-                return true;
-            }
-
-            if (obj instanceof String && StringUtils.isEmpty((String) obj)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }
