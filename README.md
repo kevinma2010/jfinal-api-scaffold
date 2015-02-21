@@ -37,6 +37,20 @@ public String resourcePrefix() {
 String str = AppProperty.me().resourcePrefix();
 ```
 
+### 已实现的接口列表
+
+* 检查账号是否被注册: GET /api/account/checkUser
+* 发送注册验证码: POST /api/account/sendCode
+* 注册: POST /api/account/register
+* 登录： POST /api/account/login
+* 查询用户资料: GET /api/account/profile
+* 修改用户资料: PUT /api/account/profile
+* 修改密码: PUT /api/account/password
+* 修改头像: PUT /api/account/avatar
+* 意见反馈: POST /api/feedback
+* 版本更新检查: GET /api/version/check
+* 文件上传: POST /api/fs/upload
+
 ### 数据响应规范
 
 避免手拼json导致的错误，而使用将Java Bean序列化为JSON的方式。
