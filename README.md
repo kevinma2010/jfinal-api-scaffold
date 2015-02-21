@@ -61,31 +61,31 @@ json数据的根节点使用code字段标识本次响应的状态，如成功、
 
 如:
 ```javascript
-//实体数据
+//实体数据, 此结构对应DatumResponse类
 {
   "code": 1,
   "message": "成功查询到该用户信息",
   "datum": {
     "name": "jack",
-	"lover": "rose",
-	"sex": 1,
-	"email": "jack@gmail.com"
+  "lover": "rose",
+  "sex": 1,
+  "email": "jack@gmail.com"
   }
 }
-//列表数据
+//列表数据, 此结构对应DataResponse类
 {
   "code": 1,
   "message": "成功查询到两条用户信息",
   "data": [{
     "name": "jack",
-	"lover": "rose",
-	"sex": 1,
-	"email": "jack@gmail.com"
+  "lover": "rose",
+  "sex": 1,
+  "email": "jack@gmail.com"
   },{
     "name": "rose",
-	"lover": "jack",
-	"sex": 0,
-	"email": "rose@gmail.com"
+  "lover": "jack",
+  "sex": 0,
+  "email": "rose@gmail.com"
   }]
 }
 //缺少参数
@@ -183,7 +183,7 @@ String token = TokenManager.getMe().generateToken(nowUser));
   "message": "success",
   "datum": {
     "file1": "/upload/images/file1.jpg",
-	"file2": "/upload/images/file2.jpg"
+  "file2": "/upload/images/file2.jpg"
   }
 }
 //全部上传失败
@@ -198,7 +198,7 @@ String token = TokenManager.getMe().generateToken(nowUser));
   "failed": ["file3"]
   "datum": {
     "file1": "/upload/images/file1.jpg",
-	"file2": "/upload/images/file2.jpg"
+  "file2": "/upload/images/file2.jpg"
   }
 }
 ```
