@@ -88,6 +88,29 @@ json数据的根节点使用code字段标识本次响应的状态，如成功、
   "email": "rose@gmail.com"
   }]
 }
+//登录成功, 此结构对应LoginResponse类
+{
+  "code": 1,
+  "message": "登录成功",
+  "constant": {
+    "resourceServer": "http://fs.mlongbo.com" //文件地址前缀
+  }
+  "info": {
+    "name": "jack",
+  "lover": "rose",
+  "sex": 1,
+  "email": "jack@gmail.com"
+  }
+}
+//多文件上传, 部分成功，部分失败. 此结构对应FileResponse类
+{
+  "code": 0, //只要有一个文件上传失败，code就会是0
+  "failed": ["file3"]
+  "datum": {
+    "file1": "/upload/images/file1.jpg",
+  "file2": "/upload/images/file2.jpg"
+  }
+}
 //缺少参数
 {
   "code": 2,
