@@ -37,7 +37,7 @@ public String resourcePrefix() {
 String str = AppProperty.me().resourcePrefix();
 ```
 
-### 已实现的接口列表
+### 已实现的常用接口列表
 
 * 检查账号是否被注册: `GET` `/api/account/checkUser`
 * 发送注册验证码: `POST` `/api/account/sendCode`
