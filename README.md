@@ -256,3 +256,8 @@ String token = TokenManager.getMe().generateToken(nowUser));
 ### 资源
 
 [现有的API接口文档](doc/index.md)
+
+
+## Copyright & License
+
+Copyright (c) 2015  Released under the [MIT license](LICENSE).
