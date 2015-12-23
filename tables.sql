@@ -11,14 +11,14 @@ CREATE TABLE `t_user` (
   `creationDate` bigint(20) DEFAULT NULL COMMENT '帐号创建日期时间戳',
   `avatar` varchar(500) DEFAULT NULL COMMENT '头像地址',
   PRIMARY KEY (`userId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 # 注册验证码表
 CREATE TABLE `t_register_code` (
   `mobile` char(11) NOT NULL COMMENT '接收短信的手机号码',
   `code` char(4) DEFAULT NULL,
   PRIMARY KEY (`mobile`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 # 意见反馈表
 CREATE TABLE `t_feedback` (
@@ -27,4 +27,4 @@ CREATE TABLE `t_feedback` (
   `creationDate` bigint(20) NOT NULL COMMENT '反馈的时间戳',
   `suggestion` varchar(300) NOT NULL COMMENT '反馈内容',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
